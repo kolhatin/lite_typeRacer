@@ -29,16 +29,14 @@ io.on('connection', (socket) => {
             text: generateText(),
         };
         socket.join(raceId);
-		console.log(`User ${socket.id} create race: ${raceId}`);
         socket.emit('raceCreated', races[raceId]);
     });
 
     // Пользователь подключается к гонке
-    socket.on('joinRace', (raceId) => {
+    socket.on('joinRace', (raceId, nickname) => {
         if (races[raceId]) {
             socket.join(raceId);
-			console.log(`User ${socket.id} join to race: ${raceId}`);
-            races[raceId].players.push({ id: socket.id, progress: 0 });
+			races[raceId].players.push({ id: socket.id, nick: nickname, progress: 0 });
             io.in(raceId).emit('raceUpdated', races[raceId]);
         } else {
             socket.emit('error', 'Race not found');
@@ -53,7 +51,11 @@ io.on('connection', (socket) => {
             const player = race.players.find(p => p.id === socket.id);
             if (player) {
                 player.progress = progress;
-				console.log(player);
+				if (progress>=100){
+					if (!player.wintime){
+						player.wintime = Date().split(" ")[4];
+					}
+				}
                 io.in(raceId).emit('raceUpdated', race);
             }
         }

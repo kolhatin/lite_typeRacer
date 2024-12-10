@@ -2,9 +2,21 @@ const socket = io();
 const createRaceBtn = document.getElementById('createRaceBtn');
 const joinRaceBtn = document.getElementById('joinRaceBtn');
 const raceIdInput = document.getElementById('raceIdInput');
+const TypoText = document.getElementById('TypoText');
+const nickIdInput = document.getElementById('nickIdInput');
+const savedNick = localStorage.getItem('nickname');
+if (savedNick) {
+    nickIdInput.value = savedNick;
+}
+
+
 const gameDiv = document.getElementById('game');
+const rezDiv = document.getElementById('rezult');
+
 
 let raceData = null;
+let roomText = null;
+let temp_p = 0;
 
 createRaceBtn.addEventListener('click', () => {
     socket.emit('createRace');
@@ -12,8 +24,14 @@ createRaceBtn.addEventListener('click', () => {
 
 joinRaceBtn.addEventListener('click', () => {
     const raceId = raceIdInput.value.trim();
+	const nickname = nickIdInput.value.trim();
+	localStorage.setItem('nickname', nickname);
+	
+	TypoText.innerHTML="";
+	roomText=null;
+	temp_p = 0;
     if (raceId) {
-        socket.emit('joinRace', raceId);
+        socket.emit('joinRace', raceId, nickname);
     }
 });
 
@@ -30,8 +48,12 @@ socket.on('raceUpdated', (race) => {
 
 function displayRace(race) {
     raceData = race;
+	if (!roomText){
+		temp_p = 0;
+		roomText = race.text;
+		TypoText.innerHTML=roomText;
+	}
     gameDiv.innerHTML = `
-        <p>Text: ${race.text}</p>
         <div id="tracks">
             ${race.players
                 .map(
@@ -45,15 +67,17 @@ function displayRace(race) {
             `
                 )
                 .join('')}
-        </div>
+        </div>`
+	rezDiv.innerHTML=`
         <p>Players:</p>
         <ul>
             ${race.players
                 .map(
                     player => `
                 <li>
-                    ${player.id === socket.id ? '<strong>Вы</strong>: ' : ''} 
-                    ${player.id} - ${Math.round(player.progress)}%
+                    ${player.id === socket.id ? '<strong>Ви</strong>: ' : ''} 
+                    ${player.nick} - ${Math.round(player.progress)}% 
+					${(player.wintime)? player.wintime : ''}
                 </li>
             `
                 )
@@ -77,13 +101,28 @@ const errorMessage = document.getElementById('errorMessage');
         
 typingInput.addEventListener('input', () => {
 	const typedText = typingInput.value;
-	const expectedText = raceData.text.slice(0, typedText.length);
+	const expectedText = roomText.slice(0, typedText.length);
+	const coursorText = '<span class="cursor"></span>'
 
 	if (typedText === expectedText) {
+		typingInput.classList.remove("txtInput-error");
 		errorMessage.textContent = ''; // Сбрасываем сообщение об ошибке
-		const progress = (typedText.length / raceData.text.length) * 100;
+		position = (temp_p + typedText.length);
+		
+		const progress = (position / raceData.text.length) * 100;
+		if (typedText.endsWith(' ') || roomText.length==typedText.length){
+			roomText=roomText.slice(typedText.length);
+			TypoText.innerHTML = TypoText.innerHTML.replace(typedText,"<span class='verify'>"+typedText+"</span>" );
+			temp_p += typedText.length
+			typingInput.value= "";
+			if (!roomText){
+				roomText=" "
+			}
+			
+		}
 		socket.emit('updateProgress', { raceId: raceData.id, progress });
 	} else {
+		typingInput.classList.add("txtInput-error");
 		errorMessage.textContent = 'Incorrect input!';
 	}
 });

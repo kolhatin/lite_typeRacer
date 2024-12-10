@@ -10,13 +10,12 @@ body {
 
 .track {
     position: relative;
-    width: 80%;
-    height: 50px;
-    background: #ddd;
-    margin: 20px auto;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    overflow: hidden;
+    width: 90%;
+    height: 35px;
+    background: #a0a0a0;
+    margin: 0px auto;
+    border: 2px dashed #fcffff;
+
 }
 
 .car {
@@ -45,4 +44,28 @@ body {
 
 .car.current-player {
 	background-image: url('/images/car-green.svg');
+}
+
+.txtInput {
+  color: #555;
+  width: 98%;
+  height: 35px;
+  font-family: Arial, serif;
+  font-size: 26px;
+  margin-top: 2px;
+  margin-bottom: 10px;
+  background: transparent none repeat scroll 0;
+  border-width: medium;
+}
+
+.txtInput-unfocused {
+  color: #CCC;
+}
+
+.txtInput-error {
+  background-color: #d08383;
+}
+
+.verify {
+	color: green;
 }

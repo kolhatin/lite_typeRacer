@@ -9,10 +9,25 @@
 <body>
     <h1>Typing Race</h1>
     <button id="createRaceBtn">Create Race</button>
+	<input id="nickIdInput" placeholder="Enter nickname" value = "Player"/>
     <input id="raceIdInput" placeholder="Enter Race ID" />
     <button id="joinRaceBtn">Join Race</button>
     <div id="game"></div>
-    <script src="/socket.io/socket.io.js"></script>
+	
+	
+	<div style="font-size: 20px; font-family: monospace;">
+		<span id="TypoText" unselectable="on"> До плеса чи до озеречка ви підпливайте ще тихше - щоб ані звуку, ані шурхоту! На озерце не випливайте, а зупиніться біля нього і дивіться. Обов'язково побачите або білолобу лиску з лисенятами, або виводки чирят, крижнів, широконосок...</span>
+	</div>
+	<div id="smoothCaret" class="visible is-idle" style="left: -2px; top: 0px; height: 23px;">
+	</div>
+	
+	<input id="typingInput" type="text" class="txtInput" autocorrect="off" autocapitalize="off">
+    <p id="errorMessage" style="color: red;"></p>
+	
+	
+	<script src="/socket.io/socket.io.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
+
+
