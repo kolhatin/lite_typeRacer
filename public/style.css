@@ -3,6 +3,46 @@ body {
     text-align: center;
     padding: 20px;
 }
+
 #game {
     margin-top: 20px;
+}
+
+.track {
+    position: relative;
+    width: 80%;
+    height: 50px;
+    background: #ddd;
+    margin: 20px auto;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.car {
+    position: absolute;
+    width: 60px;
+    height: 30px;
+	background-image: url('/images/car-brown.svg');
+	background-size: contain; /* Масштабирует изображение, чтобы оно поместилось целиком */
+    background-repeat: no-repeat; /* Убирает повторение */
+    background-position: center; /* Центрирует изображение */
+    border-radius: 5px;
+    transition: left 0.1s ease;
+}
+
+.car:nth-child(2) {
+    background-color: blue;
+}
+
+.car:nth-child(3) {
+    background-color: green;
+}
+
+.car:nth-child(4) {
+    background-color: yellow;
+}
+
+.car.current-player {
+	background-image: url('/images/car-green.svg');
 }

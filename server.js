@@ -22,13 +22,14 @@ io.on('connection', (socket) => {
 
     // Пользователь создает гонку
     socket.on('createRace', () => {
-        const raceId = getRandomInt(1000,10000);
+        const raceId = getRandomInt(1000,10000)+'';
         races[raceId] = {
             id: raceId,
             players: [],
             text: generateText(),
         };
         socket.join(raceId);
+		console.log(`User ${socket.id} create race: ${raceId}`);
         socket.emit('raceCreated', races[raceId]);
     });
 
@@ -36,8 +37,9 @@ io.on('connection', (socket) => {
     socket.on('joinRace', (raceId) => {
         if (races[raceId]) {
             socket.join(raceId);
+			console.log(`User ${socket.id} join to race: ${raceId}`);
             races[raceId].players.push({ id: socket.id, progress: 0 });
-            io.to(raceId).emit('raceUpdated', races[raceId]);
+            io.in(raceId).emit('raceUpdated', races[raceId]);
         } else {
             socket.emit('error', 'Race not found');
         }
@@ -45,12 +47,14 @@ io.on('connection', (socket) => {
 
     // Обновление прогресса игрока
     socket.on('updateProgress', ({ raceId, progress }) => {
-        const race = races[raceId];
+		const race = races[raceId];
+		console.log(io.of("/").adapter.rooms)
         if (race) {
             const player = race.players.find(p => p.id === socket.id);
             if (player) {
                 player.progress = progress;
-                io.to(raceId).emit('raceUpdated', race);
+				console.log(player);
+                io.in(raceId).emit('raceUpdated', race);
             }
         }
     });
@@ -60,7 +64,7 @@ io.on('connection', (socket) => {
         console.log(`User disconnected: ${socket.id}`);
         for (const raceId in races) {
             races[raceId].players = races[raceId].players.filter(p => p.id !== socket.id);
-            io.to(raceId).emit('raceUpdated', races[raceId]);
+            io.in(raceId).emit('raceUpdated', races[raceId]);
         }
     });
 });
