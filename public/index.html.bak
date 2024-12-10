@@ -8,6 +8,11 @@
 </head>
 <body>
     <h1>Typing Race</h1>
+	<select id="langSelect">
+        <option value="uae">Українська</option>
+        <option value="uah">Казки</option>
+        <option value="en">English</option>
+    </select>
     <button id="createRaceBtn">Create Race</button>
 	<input id="nickIdInput" placeholder="Enter nickname" value = "Player"/>
     <input id="raceIdInput" placeholder="Enter Race ID" />
@@ -24,6 +29,7 @@
 	<input id="typingInput" type="text" class="txtInput" autocorrect="off" autocapitalize="off">
     <p id="errorMessage" style="color: red;"></p>
 	
+	<div id="rezult"></div>
 	
 	<script src="/socket.io/socket.io.js"></script>
     <script src="script.js"></script>

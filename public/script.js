@@ -19,7 +19,8 @@ let roomText = null;
 let temp_p = 0;
 
 createRaceBtn.addEventListener('click', () => {
-    socket.emit('createRace');
+	const lang = document.getElementById('langSelect').value;
+    socket.emit('createRace', lang);
 });
 
 joinRaceBtn.addEventListener('click', () => {
@@ -41,7 +42,6 @@ socket.on('raceCreated', (race) => {
 });
 
 socket.on('raceUpdated', (race) => {
-    console.log(race);
 	displayRace(race);
 	
 });
@@ -69,7 +69,7 @@ function displayRace(race) {
                 .join('')}
         </div>`
 	rezDiv.innerHTML=`
-        <p>Players:</p>
+        <p>Учасники:</p>
         <ul>
             ${race.players
                 .map(
