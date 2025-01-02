@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Kids Typing Race</title>
+    <title>Клаво-гонки</title>
 </head>
 <body>
-    <h1>Typing Race</h1>
+    <h1>Перегони на клавіатурах</h1>
 	<select id="langSelect">
         <option value="uae">Українська</option>
         <option value="uah">Казки</option>
         <option value="en">English</option>
     </select>
-    <button id="createRaceBtn">Create Race</button>
-	<input id="nickIdInput" placeholder="Enter nickname" value = "Player"/>
-    <input id="raceIdInput" placeholder="Enter Race ID" />
-    <button id="joinRaceBtn">Join Race</button>
+    <button id="createRaceBtn">Створити гонку</button>
+	<input id="nickIdInput" placeholder="Введіть ім'я" value = "Player"/>
+    <input id="raceIdInput" placeholder="Введіть номер гонки" />
+    <button id="joinRaceBtn">Доєднатись</button>
     <div id="game"></div>
 	
 	
