@@ -44,6 +44,19 @@ const texts_en=[
     "John has a blue bike and rides it every day.",
     "We went to the zoo and saw a lion."
 ];
+const texts_enh=[
+    "The sun was shining brightly, and the birds were singing in the trees. It was a perfect day for a walk in the park.",
+    "Tom found a little kitten near his house. He gave it some milk, and the kitten purred happily.",
+    "Lucy loves to read fairy tales every night before bed. Her favorite story is about a brave knight and a dragon.",
+    "The children played soccer in the yard. They laughed and cheered as the ball flew into the goal.",
+    "Anna baked cookies with her grandmother. The kitchen smelled like chocolate and vanilla.",
+    "It started raining, but Jack didn’t mind. He put on his boots and splashed in the puddles.",
+    "Sara planted flowers in the garden. After a few weeks, they bloomed with bright colors.",
+    "John and his sister built a snowman in the backyard. They gave it a carrot nose and a scarf.",
+    "A little bird flew into the classroom. The teacher gently opened the window, and the bird flew away.",
+    "The dog was wagging its tail as it waited for its owner. When the boy came back, the dog jumped with joy."
+];
+
 
 const texts_uae = [
     "Сонце світить на небі.",
@@ -76,6 +89,9 @@ function generateText(lang) {
 		case 'en':
 			randomIndex = Math.floor(Math.random() * texts_en.length);
 			return texts_en[randomIndex];
+		case 'enh':
+			randomIndex = Math.floor(Math.random() * texts_enh.length);
+			return texts_enh[randomIndex];
 		default:
 			return "Please select a valid language or category.";
 	}
